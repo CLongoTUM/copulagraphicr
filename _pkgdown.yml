@@ -1,0 +1,9 @@
+destination: C:/Users/chess/OneDrive/Documents/R (git)/Archive
+
+development:
+  mode: auto
+
+repo:
+  url:
+    home: https://github.com/CLongoTUM/_git/copulagraphicr
+    source: https://github.com/CLongoTUM/_git/copulagraphicr//?path=%2F

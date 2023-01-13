@@ -1,0 +1,46 @@
+---
+output:
+  github_document:
+    number_sections: true
+params:
+  pkg_name: !r desc::desc()$get_field("Package")
+  pkg_desc: !r desc::desc()$get_field("Description")
+  pkg_vers: !r desc::desc()$get_field("Version")
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+collapse = TRUE,
+comment = "#>"
+)
+```
+
+```{r, include = FALSE}
+# https://stackoverflow.com/a/43699235
+default_source_hook <- knitr::knit_hooks$get('source')
+
+knitr::knit_hooks$set(source = function(x, options) {
+  x <- stringr::str_replace_all(x, pattern = 'params\\$pkg_name', paste0('"', params$pkg_name))
+  default_source_hook(x, options)
+})
+```
+
+```{r pkg_meta_data, eval = TRUE, include = FALSE}
+fields <- c("Version",
+            "Maintainer"
+            )
+
+data <- desc::desc()$get(fields)
+data$Maintainer <- desc::desc_get_maintainer()
+
+idv_data <- data.frame(as.list(data))
+```
+
+# `r params$pkg_name` {-}
+
+`r params$pkg_desc`
+
+`r knitr::kable(idv_data)`
+
+```{r, child = "inst/1_Installation.Rmd"}
+```

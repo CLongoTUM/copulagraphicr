@@ -1,0 +1,20 @@
+# Installation
+
+## Released Version
+
+All released versions can be found at xxx.
+
+From this location the released version can be installed using package drat:
+
+<!-- note that the package must be pushed there, using -->
+<!-- drat::insertPackage(file = devtools::build(),
+repodir = paste0("M:/", desc::desc()$get_field("Organisationseinheit"))) -->
+
+
+```{r setup_idv_repo, eval = FALSE, include = TRUE}
+# install latest released package version from central repo
+install.packages(params$pkg_name,
+                 type = "source",
+                 repos = paste0("file:M:/", params$pkg_org))
+
+```
