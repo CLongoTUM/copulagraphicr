@@ -1,0 +1,192 @@
+time,delta,status,event,invasion,ici,epicel,ulcer,thick,sex,age,logthick
+35,0,0,censored,level.1,2,not present,not present,1.34,Male,41,0.292669614
+185,1,1,death.malignant.melanoma,level.2,2,present,present,12.08,Male,52,2.491551193
+204,1,1,death.malignant.melanoma,level.2,2,not present,present,4.84,Male,28,1.576914721
+210,1,1,death.malignant.melanoma,level.2,2,present,present,5.16,Male,77,1.640936579
+232,1,1,death.malignant.melanoma,level.2,2,not present,present,12.88,Male,49,2.555675721
+279,1,1,death.malignant.melanoma,level.0,2,not present,present,7.41,Female,68,2.002830439
+295,1,1,death.malignant.melanoma,level.1,1,not present,present,4.19,Female,53,1.432700734
+386,1,1,death.malignant.melanoma,level.0,2,not present,present,3.87,Female,68,1.353254507
+426,1,1,death.malignant.melanoma,level.2,2,present,present,4.84,Male,63,1.576914721
+469,1,1,death.malignant.melanoma,level.1,3,not present,present,2.42,Female,14,0.88376754
+529,1,1,death.malignant.melanoma,level.1,2,not present,present,5.8,Male,46,1.757857918
+621,1,1,death.malignant.melanoma,level.2,3,not present,present,7.06,Male,72,1.954445052
+629,1,1,death.malignant.melanoma,level.2,3,not present,present,5.48,Male,95,1.701105101
+659,1,1,death.malignant.melanoma,level.2,3,not present,present,7.73,Male,54,2.045108863
+667,1,1,death.malignant.melanoma,level.1,2,not present,present,13.85,Female,89,2.628285233
+718,1,1,death.malignant.melanoma,level.0,1,present,present,2.34,Male,25,0.850150929
+752,1,1,death.malignant.melanoma,level.1,2,not present,present,4.19,Male,37,1.432700734
+779,1,1,death.malignant.melanoma,level.1,2,not present,present,4.04,Male,43,1.396244692
+793,1,1,death.malignant.melanoma,level.1,2,not present,present,4.84,Male,68,1.576914721
+817,1,1,death.malignant.melanoma,level.0,2,present,not present,0.32,Female,67,-1.139434283
+833,1,1,death.malignant.melanoma,level.1,1,not present,present,2.58,Female,56,0.947789399
+858,1,1,death.malignant.melanoma,level.1,1,not present,not present,3.56,Female,16,1.269760545
+869,1,1,death.malignant.melanoma,level.1,3,present,not present,3.54,Female,42,1.264126727
+872,1,1,death.malignant.melanoma,level.0,0,present,not present,0.97,Female,65,-0.030459207
+967,1,1,death.malignant.melanoma,level.1,2,not present,present,4.83,Male,52,1.574846468
+977,1,1,death.malignant.melanoma,level.0,2,not present,present,1.62,Male,58,0.482426149
+982,1,1,death.malignant.melanoma,level.2,2,not present,present,6.44,Female,60,1.86252854
+1041,1,1,death.malignant.melanoma,level.2,2,present,not present,14.66,Male,68,2.685122696
+1055,1,1,death.malignant.melanoma,level.1,1,not present,present,2.58,Female,75,0.947789399
+1062,1,1,death.malignant.melanoma,level.1,3,not present,present,3.87,Male,19,1.353254507
+1075,1,1,death.malignant.melanoma,level.1,2,not present,present,3.54,Male,66,1.264126727
+1156,1,1,death.malignant.melanoma,level.1,2,not present,present,1.34,Female,56,0.292669614
+1228,1,1,death.malignant.melanoma,level.0,2,present,present,2.24,Male,46,0.806475866
+1252,1,1,death.malignant.melanoma,level.1,2,not present,present,3.87,Female,58,1.353254507
+1271,1,1,death.malignant.melanoma,level.1,1,not present,present,3.54,Female,74,1.264126727
+1312,1,1,death.malignant.melanoma,level.2,3,not present,present,17.42,Female,65,2.857618971
+1435,1,1,death.malignant.melanoma,level.1,2,present,not present,3.22,Male,27,1.16938136
+1499,0,0,censored,level.0,1,present,not present,1.29,Male,73,0.254642218
+1506,1,1,death.malignant.melanoma,level.0,1,present,present,4.51,Male,56,1.506297154
+1508,0,0,censored,level.2,2,present,present,8.38,Male,63,2.125847914
+1510,0,0,censored,level.1,2,present,not present,1.94,Female,69,0.662687973
+1512,0,0,censored,level.0,2,present,not present,0.16,Female,77,-1.832581464
+1516,1,1,death.malignant.melanoma,level.0,2,present,present,2.58,Male,80,0.947789399
+1542,0,0,censored,level.0,3,present,not present,0.16,Female,65,-1.832581464
+1548,1,1,death.malignant.melanoma,level.1,1,not present,not present,1.62,Female,61,0.482426149
+1557,0,0,censored,level.0,1,present,not present,1.29,Female,26,0.254642218
+1560,1,1,death.malignant.melanoma,level.1,1,not present,not present,2.1,Female,57,0.741937345
+1563,0,0,censored,level.0,1,present,not present,0.32,Female,45,-1.139434283
+1584,1,1,death.malignant.melanoma,level.0,1,not present,not present,0.81,Male,31,-0.210721031
+1605,0,0,censored,level.1,2,not present,not present,1.13,Female,36,0.122217633
+1621,1,1,death.malignant.melanoma,level.1,2,not present,present,5.16,Female,46,1.640936579
+1627,0,0,censored,level.1,1,not present,not present,1.62,Female,43,0.482426149
+1634,0,0,censored,level.1,1,present,not present,1.37,Female,68,0.31481074
+1641,0,0,censored,level.0,1,not present,not present,0.24,Male,57,-1.427116356
+1641,0,0,censored,level.0,2,not present,not present,0.81,Female,57,-0.210721031
+1648,0,0,censored,level.0,2,not present,not present,1.29,Female,55,0.254642218
+1652,0,0,censored,level.1,1,not present,not present,1.29,Female,58,0.254642218
+1654,0,0,censored,level.0,2,present,not present,0.97,Male,20,-0.030459207
+1654,0,0,censored,level.0,2,present,not present,1.13,Female,67,0.122217633
+1667,1,1,death.malignant.melanoma,level.2,2,not present,present,5.8,Female,44,1.757857918
+1678,0,0,censored,level.1,1,present,not present,1.29,Female,59,0.254642218
+1685,0,0,censored,level.0,2,not present,not present,0.48,Female,32,-0.733969175
+1690,1,1,death.malignant.melanoma,level.1,2,present,not present,1.62,Male,83,0.482426149
+1710,0,0,censored,level.1,2,not present,not present,2.26,Female,55,0.815364813
+1710,0,0,censored,level.0,2,not present,not present,0.58,Male,15,-0.544727175
+1726,1,1,death.malignant.melanoma,level.0,3,not present,present,0.97,Female,58,-0.030459207
+1745,0,0,censored,level.1,3,present,present,2.58,Female,47,0.947789399
+1762,0,0,censored,level.0,1,not present,not present,0.81,Female,54,-0.210721031
+1779,0,0,censored,level.1,2,present,present,3.54,Male,55,1.264126727
+1787,0,0,censored,level.0,2,not present,not present,0.97,Male,38,-0.030459207
+1787,0,0,censored,level.0,0,not present,present,1.78,Female,41,0.576613364
+1793,0,0,censored,level.1,1,not present,not present,1.94,Female,56,0.662687973
+1804,0,0,censored,level.1,2,present,not present,1.29,Female,48,0.254642218
+1812,0,0,censored,level.1,2,not present,present,3.22,Male,44,1.16938136
+1836,0,0,censored,level.1,1,present,not present,1.53,Female,70,0.425267735
+1839,0,0,censored,level.0,1,present,not present,1.29,Female,40,0.254642218
+1839,0,0,censored,level.0,1,present,present,1.62,Male,53,0.482426149
+1854,0,0,censored,level.1,0,present,present,1.62,Female,65,0.482426149
+1856,0,0,censored,level.0,0,not present,not present,0.32,Male,54,-1.139434283
+1864,0,0,censored,level.0,1,not present,not present,1.29,Female,49,0.254642218
+1899,0,0,censored,level.0,1,present,not present,0.97,Female,55,-0.030459207
+1914,0,0,censored,level.2,2,not present,not present,3.06,Female,69,1.118414916
+1919,0,0,censored,level.1,2,present,not present,3.54,Male,83,1.264126727
+1920,0,0,censored,level.0,2,not present,present,1.62,Male,60,0.482426149
+1927,0,0,censored,level.2,1,not present,present,2.58,Male,40,0.947789399
+1933,1,1,death.malignant.melanoma,level.2,2,not present,not present,1.94,Female,77,0.662687973
+1942,0,0,censored,level.0,1,present,not present,0.81,Female,35,-0.210721031
+1955,0,0,censored,level.2,1,not present,present,7.73,Female,46,2.045108863
+1956,0,0,censored,level.1,2,not present,not present,0.97,Female,34,-0.030459207
+1958,0,0,censored,level.2,1,not present,not present,12.88,Female,69,2.555675721
+1963,0,0,censored,level.0,1,not present,not present,2.58,Female,60,0.947789399
+1970,0,0,censored,level.1,2,present,present,4.09,Male,84,1.40854497
+2005,0,0,censored,level.0,3,not present,not present,0.64,Female,66,-0.446287103
+2007,0,0,censored,level.1,1,present,not present,0.97,Male,56,-0.030459207
+2011,0,0,censored,level.1,2,not present,present,3.22,Female,75,1.16938136
+2024,0,0,censored,level.1,1,not present,not present,1.62,Female,36,0.482426149
+2028,0,0,censored,level.0,1,not present,present,3.87,Male,52,1.353254507
+2038,0,0,censored,level.0,2,present,present,0.32,Female,58,-1.139434283
+2056,0,0,censored,level.0,1,present,not present,0.32,Female,39,-1.139434283
+2059,0,0,censored,level.1,1,present,present,3.22,Male,68,1.16938136
+2061,1,1,death.malignant.melanoma,level.1,1,present,not present,2.26,Male,71,0.815364813
+2062,1,1,death.malignant.melanoma,level.1,3,not present,not present,3.06,Female,52,1.118414916
+2075,0,0,censored,level.0,0,not present,present,2.58,Male,55,0.947789399
+2102,0,0,censored,level.0,2,not present,not present,1.13,Male,35,0.122217633
+2103,1,1,death.malignant.melanoma,level.0,1,not present,not present,0.81,Male,44,-0.210721031
+2104,0,0,censored,level.0,2,not present,not present,0.97,Female,72,-0.030459207
+2108,1,1,death.malignant.melanoma,level.0,2,not present,present,1.76,Female,58,0.565313809
+2112,0,0,censored,level.1,0,present,present,1.94,Female,54,0.662687973
+2150,0,0,censored,level.0,2,not present,not present,0.65,Female,33,-0.430782916
+2156,0,0,censored,level.0,3,present,not present,0.97,Female,45,-0.030459207
+2165,0,0,censored,level.1,2,not present,not present,5.64,Male,62,1.729884066
+2209,0,0,censored,level.2,2,present,not present,9.66,Female,72,2.267993648
+2227,0,0,censored,level.0,2,present,not present,0.1,Female,51,-2.302585093
+2227,0,0,censored,level.1,2,not present,present,5.48,Male,77,1.701105101
+2256,1,1,death.malignant.melanoma,level.1,2,not present,present,2.26,Female,43,0.815364813
+2264,0,0,censored,level.2,2,present,present,4.83,Female,65,1.574846468
+2339,0,0,censored,level.1,2,present,not present,0.97,Female,63,-0.030459207
+2361,0,0,censored,level.0,2,present,not present,0.97,Male,60,-0.030459207
+2387,0,0,censored,level.1,1,not present,present,5.16,Female,50,1.640936579
+2388,1,1,death.malignant.melanoma,level.0,1,not present,not present,0.81,Male,40,-0.210721031
+2403,0,0,censored,level.2,2,not present,present,2.9,Female,67,1.064710737
+2426,0,0,censored,level.1,2,not present,not present,3.87,Female,69,1.353254507
+2426,0,0,censored,level.1,2,present,present,1.94,Female,74,0.662687973
+2431,0,0,censored,level.0,2,present,not present,0.16,Female,49,-1.832581464
+2460,0,0,censored,level.0,2,present,not present,0.64,Female,47,-0.446287103
+2467,1,1,death.malignant.melanoma,level.0,2,not present,present,2.26,Female,42,0.815364813
+2492,0,0,censored,level.0,3,not present,not present,1.45,Female,54,0.371563556
+2493,0,0,censored,level.1,2,not present,present,4.82,Male,72,1.572773928
+2521,0,0,censored,level.0,1,not present,present,1.29,Female,45,0.254642218
+2542,0,0,censored,level.1,2,not present,present,7.89,Male,67,2.065596135
+2559,0,0,censored,level.0,0,not present,present,0.81,Female,48,-0.210721031
+2565,1,1,death.malignant.melanoma,level.1,1,not present,present,3.54,Male,34,1.264126727
+2570,0,0,censored,level.0,1,not present,not present,1.29,Female,44,0.254642218
+2660,0,0,censored,level.0,1,present,not present,0.64,Female,31,-0.446287103
+2666,0,0,censored,level.1,2,not present,present,3.22,Female,42,1.16938136
+2676,0,0,censored,level.0,2,present,present,1.45,Female,24,0.371563556
+2738,0,0,censored,level.0,2,present,not present,0.48,Female,58,-0.733969175
+2782,1,1,death.malignant.melanoma,level.1,2,present,not present,1.94,Male,78,0.662687973
+2787,0,0,censored,level.0,1,present,not present,0.16,Male,62,-1.832581464
+2984,0,0,censored,level.0,1,present,not present,0.16,Male,70,-1.832581464
+3032,0,0,censored,level.0,2,not present,not present,1.29,Female,35,0.254642218
+3040,0,0,censored,level.0,2,not present,not present,1.94,Female,61,0.662687973
+3042,1,1,death.malignant.melanoma,level.1,2,not present,present,3.54,Female,54,1.264126727
+3067,0,0,censored,level.0,2,present,not present,0.81,Female,29,-0.210721031
+3079,0,0,censored,level.0,0,not present,not present,0.65,Male,64,-0.430782916
+3101,0,0,censored,level.2,1,present,not present,7.09,Male,47,1.958685341
+3144,0,0,censored,level.0,2,present,not present,0.16,Male,62,-1.832581464
+3152,0,0,censored,level.0,2,not present,not present,1.62,Female,32,0.482426149
+3180,0,0,censored,level.0,1,not present,not present,1.29,Female,25,0.254642218
+3185,0,0,censored,level.0,1,not present,not present,0.48,Female,64,-0.733969175
+3199,0,0,censored,level.0,2,present,not present,0.64,Female,36,-0.446287103
+3228,0,0,censored,level.1,1,not present,present,3.22,Female,58,1.16938136
+3229,0,0,censored,level.0,1,not present,not present,1.94,Female,37,0.662687973
+3278,0,0,censored,level.1,3,present,not present,2.58,Male,54,0.947789399
+3297,0,0,censored,level.1,1,not present,present,2.58,Female,61,0.947789399
+3328,0,0,censored,level.0,2,present,not present,0.81,Male,31,-0.210721031
+3330,0,0,censored,level.0,2,present,present,0.81,Male,61,-0.210721031
+3338,1,1,death.malignant.melanoma,level.1,1,present,present,3.22,Female,60,1.16938136
+3383,0,0,censored,level.0,3,present,not present,0.32,Female,43,-1.139434283
+3384,0,0,censored,level.1,2,present,present,3.22,Female,68,1.16938136
+3385,0,0,censored,level.1,2,not present,not present,2.74,Female,4,1.00795792
+3388,0,0,censored,level.0,2,not present,present,4.84,Male,60,1.576914721
+3402,0,0,censored,level.0,0,present,not present,1.62,Male,50,0.482426149
+3441,0,0,censored,level.0,3,present,not present,0.65,Female,20,-0.430782916
+3459,0,0,censored,level.0,1,not present,not present,0.65,Female,29,-0.430782916
+3459,0,0,censored,level.0,0,present,present,1.29,Male,56,0.254642218
+3476,0,0,censored,level.0,0,not present,not present,1.62,Female,60,0.482426149
+3523,0,0,censored,level.2,2,not present,not present,3.54,Female,46,1.264126727
+3667,0,0,censored,level.1,2,not present,not present,3.22,Female,42,1.16938136
+3695,0,0,censored,level.0,0,present,not present,0.65,Female,34,-0.430782916
+3695,0,0,censored,level.0,2,present,not present,1.03,Female,56,0.029558802
+3776,0,0,censored,level.2,3,not present,present,7.09,Male,12,1.958685341
+3776,0,0,censored,level.1,2,not present,present,1.29,Female,21,0.254642218
+3830,0,0,censored,level.0,0,not present,not present,0.65,Male,46,-0.430782916
+3856,0,0,censored,level.0,2,not present,not present,1.78,Female,49,0.576613364
+3872,0,0,censored,level.2,0,not present,present,12.24,Female,35,2.504709277
+3909,0,0,censored,level.1,2,not present,present,8.06,Male,42,2.086913557
+3968,0,0,censored,level.0,2,present,not present,0.81,Female,47,-0.210721031
+4001,0,0,censored,level.1,2,present,not present,2.1,Female,69,0.741937345
+4103,0,0,censored,level.2,2,present,not present,3.87,Female,52,1.353254507
+4119,0,0,censored,level.0,2,present,not present,0.65,Male,52,-0.430782916
+4124,0,0,censored,level.0,2,not present,present,1.94,Female,30,0.662687973
+4207,0,0,censored,level.0,1,present,not present,0.65,Male,22,-0.430782916
+4310,0,0,censored,level.1,3,present,not present,2.1,Male,55,0.741937345
+4390,0,0,censored,level.0,1,not present,present,1.94,Female,26,0.662687973
+4479,0,0,censored,level.0,0,not present,present,1.13,Female,19,0.122217633
+4492,0,0,censored,level.2,3,present,present,7.06,Male,29,1.954445052
+4668,0,0,censored,level.2,2,present,not present,6.12,Female,40,1.811562097
+4688,0,0,censored,level.0,1,present,not present,0.48,Female,42,-0.733969175
+4926,0,0,censored,level.0,1,not present,not present,2.26,Female,50,0.815364813
+5565,0,0,censored,level.1,2,not present,not present,2.9,Female,41,1.064710737
