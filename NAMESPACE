@@ -3,4 +3,5 @@
 export("%>%")
 export(estimate_quantities)
 export(load_data)
+export(visualize_data)
 importFrom(magrittr,"%>%")

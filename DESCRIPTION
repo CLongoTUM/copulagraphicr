@@ -26,4 +26,6 @@ Imports:
   magrittr,
   data.table,
   survival,
-  pracma
+  pracma,
+  graphics,
+  grDevices

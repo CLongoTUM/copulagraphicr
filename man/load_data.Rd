@@ -32,7 +32,7 @@ The competing risk data should consist of the observed sample data
 }
 }
 \examples{
-\donttest{# load data set:
-df <- load_data()
+\donttest{## load data set:
+# df <- load_data()
 }
 }

@@ -23,15 +23,15 @@ These quantities can be estimated by their empirical estimates
 }
 }
 \examples{
-\donttest{# load data set:
-data_path <- system.file("inst/Melanoma.csv", package = "copulagraphicr")
-df <- copulagraphicr::load_data(data_path = data_path)
+\donttest{## load data set:
+# data_path <- system.file("inst/Melanoma.csv", package = "copulagraphicr")
+# sample_data <- copulagraphicr::load_data(data_path = data_path)
 
-# estimate empirical quantities:
-est <- copulagraphicr::estimate_quantities(sample_data = df)
-t_grid <- est[[1]]
-k <- est[[2]]
-p_1 <- est[[3]]
-p_2 <- est[[4]]
+## estimate empirical quantities:
+# est <- copulagraphicr::estimate_quantities(sample_data = sample_data)
+# t_grid <- est[[1]]
+# k <- est[[2]]
+# p_1 <- est[[3]]
+# p_2 <- est[[4]]
 }
 }
