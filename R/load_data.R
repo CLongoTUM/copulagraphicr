@@ -23,10 +23,13 @@
 #' @importFrom magrittr "%>%"
 #' @export
 #'
-#' @examples # load data set: df <- load_data()
+#' @examples \donttest{# load data set:
+#' df <- load_data()
+#' }
 load_data <- function(data_path = system.file("inst/Melanoma.csv", package = "copulagraphicr")) {
   sample_data <- data.table::fread(data_path) %>%
-    dplyr::select("time", "delta")
+    dplyr::select("time", "delta") %>%
+    dplyr::rename("T" = "time")
   return(sample_data)
 }
 
