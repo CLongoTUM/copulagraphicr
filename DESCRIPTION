@@ -9,7 +9,7 @@ Description:
   characteristic quantities of the competing data and a function to calculate the corresponding 
   Copula-Graphic estimator for a given Copula. Further the package contains predefined
   plots of the sample data and the Copula-Graphic estimator.
-License: CLongo
+License: MIT + file LICENSE
 URL: file:///C:/Users/chess/OneDrive/Documents/R
     (git)/copulagraphicr/index.html
 Documentation: High
@@ -19,3 +19,11 @@ RoxygenNote: 7.1.2
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Imports: 
+  tidyr,
+  dplyr,
+  lubridate,
+  magrittr,
+  data.table,
+  survival,
+  pracma
