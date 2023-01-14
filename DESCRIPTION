@@ -28,4 +28,5 @@ Imports:
   survival,
   pracma,
   graphics,
-  grDevices
+  grDevices,
+  VineCopula
