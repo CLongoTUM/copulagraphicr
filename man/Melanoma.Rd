@@ -22,6 +22,6 @@ contains the respective time-to-event \eqn{T} and the information if A or B was 
 # df <- load(Melanoma)
 }
 \references{
-riskRegression::Melanoma
+The data used is taken from riskRegression::Melanoma
 }
 \keyword{data}

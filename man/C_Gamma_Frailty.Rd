@@ -4,15 +4,19 @@
 \alias{C_Gamma_Frailty}
 \title{Gamma frailty Copula}
 \usage{
-C_Gamma_Frailty(x, y, alpha = 3)
+C_Gamma_Frailty(x, y, theta = 3, tau = NA)
 }
 \arguments{
 \item{x}{It is required that \eqn{0 \le x \le 1}}
 
 \item{y}{It is required that \eqn{0 \le y \le 1}}
 
-\item{alpha}{Parameter of the Gamma Frailty Copula.
-It is required that \code{alpha} \eqn{\ge 1}.}
+\item{theta}{Parameter of the Gamma Frailty Copula.
+It is required that \code{theta} \eqn{\ge 1}.}
+
+\item{tau}{Placeholder argument. It is required that each copula has the input
+argument \code{tau} (Kendall's \eqn{\tau}. Unfortunately the closed form solution for
+Kendall's \eqn{\tau} is unknown to the author.}
 }
 \description{
 Gamma frailty Copula

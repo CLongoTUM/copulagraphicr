@@ -46,20 +46,32 @@
 #' See documentation of function \link[copulagraphicr]{estimate_quantities}.
 #' @param k Empirical estimate est \eqn{k(t[i])} for \eqn{P(X > t[i], Y > t[i])}.
 #' See documentaion of function \link[copulagraphicr]{estimate_quantities}.
+#' @param theta Parameter of the following copulas:
+#' \itemize{
+#' \item Gamma Frailty Copula, `theta` \eqn{\ge 1}
+#' \item Gumbel Copula, `theta` \eqn{\ge 1}
+#' \item Frank Copula, `theta` \eqn{=/= 0}
+#' \item Clayton Copula, `theta` \eqn{\ge -1}
+#' \item Joe's Copula, `theta` \eqn{\ge 1}
+#' }
+#' If set to `NA`, `theta` is chosen such that
+#' Kendall's \eqn{\tau = 0.5}. Note that the parameter `theta` is only used, if `NA` value for
+#' `tau` is passed.
+#' @param tau Kendall's \eqn{\tau}.
 #'
 #' @examples \donttest{## load data set:
 #' # data_path <- system.file("inst/Melanoma.csv", package = "copulagraphicr")
 #' # sample_data <- copulagraphicr::load_data(data_path = data_path)
 #'
 #' ## estimate empirical quantities:
-#' # est <- copulagraphicr::estimate_quantities(sample_data = sample_data)
+#' #' # G_t_i <- c(0)
+# est <- copulagraphicr::estimate_quantities(sample_data = sample_data)
 #' # t_grid <- est[[1]]
 #' # k <- est[[2]]
 #' # p_1 <- est[[3]]
 #' # p_2 <- est[[4]]
 #' }
 #'
-#' # G_t_i <- c(0)
 #' # F_hat <- c(0)
 #' # G_hat <- c(0)
 #' # mu_C_B <- c(0)
@@ -84,12 +96,14 @@
 #'
 solve_G_F <- function(F_t_i_minus_1, G_t_i_minus_1,
                       mu_C_B_t_i_minus_1,
-                      C = copulagraphicr::C_independence,
-                      error_A = 1e-8,
+                      C,
+                      error_A = 1e-7,
                       error_B = 1e-5,
                       i,
                       p_1,
-                      k) {
+                      k,
+                      theta = NA,
+                      tau = NA) {
   # bisection algorithm to find a solution (F(t_i), G(t_i))
 
   ## The bisection chooses a parameter in the interval [lower_F,upper_F].
@@ -125,7 +139,7 @@ solve_G_F <- function(F_t_i_minus_1, G_t_i_minus_1,
         print("No solution found")
         break
       }
-      print(paste0("Error B was adjusted to: ", error_B))
+      print(paste0("In iteration ", i, " Error B was adjusted to: ", error_B, " Eps B value is: ", eps_B))
       iter_B <- 0
     }
 
@@ -134,8 +148,8 @@ solve_G_F <- function(F_t_i_minus_1, G_t_i_minus_1,
     iter_A <- 0
     ## error tolerance: |mu_C(A_t_i) - k(t_i)| < error_A
     while (eps_A > error_A) {
-      mu_C_A_i <- 1 - mean(c(lower_G, upper_G)) - F_t_i + C(F_t_i, mean(c(lower_G, upper_G)))
-
+      mu_C_A_i <- 1 - mean(c(lower_G, upper_G)) - F_t_i
+                  + C(x = F_t_i, y = mean(c(lower_G, upper_G)), theta = theta, tau = tau)
       if (mu_C_A_i > k[i]) {
         # P(X > t_i, Y > t_i) < mu_C_A_i, so prob. to survive was too large / die was too low
         lower_G <- mean(c(lower_G, upper_G)) # increase prob. to die by choosing higher F
@@ -151,10 +165,12 @@ solve_G_F <- function(F_t_i_minus_1, G_t_i_minus_1,
         break
       }
     }
-    G_t <- mean(c(lower_G, upper_G))
+    G_t_i <- mean(c(lower_G, upper_G))
 
     ## Step 2: check if the pair (F(t_i), G(t_i)) satisfies mu_C(B_t) = est p_1(t)
-    mu_C_B_i <- mu_C_B_t_i_minus_1 + F_t_i - F_t_i_minus_1 + C(F_t_i_minus_1, G_t) - C(F_t_i, G_t)
+    mu_C_B_i <- mu_C_B_t_i_minus_1 + F_t_i - F_t_i_minus_1
+                  + C(x = F_t_i_minus_1, y = G_t_i,  theta = theta, tau = tau)
+                  - C(x = F_t_i, y = G_t_i, theta = theta, tau = tau)
 
     if (mu_C_B_i > p_1[i]) {
       # F(t_i) was too large
@@ -164,28 +180,8 @@ solve_G_F <- function(F_t_i_minus_1, G_t_i_minus_1,
       lower_F <- mean(c(lower_F, upper_F)) # increase prob. to die by choosing higher F
     }
     eps_B <- abs(mu_C_B_i - p_1[i])
-
     F_t_i <- mean(c(lower_F, upper_F))
   }
-  list <- list(F_t_i, G_t, mu_C_B_i, mu_C_A_i)
+  list <- list(F_t_i, G_t_i, mu_C_B_i, mu_C_A_i)
   return(list)
 }
-#
-# G_t_i <- c(0)
-# F_hat <- c(0)
-# G_hat <- c(0)
-# mu_C_B <- c(0)
-# mu_C_A <- c(0)
-#
-# for (i in 2:(length(t_grid))) {
-#   solve <- solve_G_F(F_t_i_minus_1 = F_hat[i-1],
-#                      G_t_i_minus_1 = G_hat[i-1],
-#                      mu_C_B_t_i_minus_1 = mu_C_B[i-1],
-#                      C = copulagraphicr::C_independence)
-#   F_hat[i] <- solve[[1]]
-#   G_hat[i] <- solve[[2]]
-#   mu_C_B[i] <- solve[[3]]
-#   mu_C_A[i] <- solve[[4]]
-#   print(i)
-# }
-#

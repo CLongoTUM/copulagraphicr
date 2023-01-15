@@ -17,7 +17,9 @@ C_Joe(
 \item{y}{It is required that \eqn{0 \le y \le 1}}
 
 \item{theta}{Parameter of the Joe Copula.
-It is required that \code{theta} \eqn{\ge 1}.}
+It is required that \code{theta} \eqn{\ge 1}. If set to \code{NA}, \code{theta} is chosen such that
+Kendall's \eqn{\tau = 0.5}. Note that the parameter \code{theta} is only used, if \code{NA} value for
+\code{tau} is passed.}
 
 \item{tau}{Kendall's \eqn{\tau} for the Joe Copula. If set to \code{NA}, the
 value of Kendall's \eqn{\tau} is defined by \code{theta}.

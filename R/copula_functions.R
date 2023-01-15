@@ -2,13 +2,15 @@
 #'
 #' @param x It is required that \eqn{0 \le x \le 1}
 #' @param y It is required that \eqn{0 \le y \le 1}
+#' @param theta Placeholder argument. Not applicable for independence copula.
+#' @param tau Placeholder argument. Kendall's \eqn{\tau} is zero for the independence copula.
 #'
 #' @export
 #'
 #' @examples x <- runif(10^2)
 #' y <- runif(10^2)
-#' sample <- C_independence(x, y)
-C_independence <- function(x, y) {
+#' sample <- C_Independence(x, y)
+C_Independence <- function(x, y, theta = NA, tau = 0) {
   if (sum(x[x < 0 | x > 1]) + sum(y[y < 0 | y > 1]) == 0) {
     C <- x*y
     return(C)
@@ -22,20 +24,26 @@ C_independence <- function(x, y) {
 #'
 #' @param x It is required that \eqn{0 \le x \le 1}
 #' @param y It is required that \eqn{0 \le y \le 1}
-#' @param alpha Parameter of the Gamma Frailty Copula.
-#' It is required that `alpha` \eqn{\ge 1}.
+#' @param theta Parameter of the Gamma Frailty Copula.
+#' It is required that `theta` \eqn{\ge 1}.
+#' @param tau Placeholder argument. It is required that each copula has the input
+#' argument `tau` (Kendall's \eqn{\tau}. Unfortunately the closed form solution for
+#' Kendall's \eqn{\tau} is unknown to the author.
 #'
 #' @export
 #'
 #' @examples x <- runif(10^2)
 #' y <- runif(10^2)
 #' sample <- C_Gamma_Frailty(x, y)
-C_Gamma_Frailty <- function(x, y, alpha = 3) {
+C_Gamma_Frailty <- function(x, y, theta = 3, tau = NA) {
   if (sum(x[x < 0 | x > 1]) + sum(y[y < 0 | y > 1]) == 0) {
-    if (alpha >= 1) {
-      C <- x+y-1+((1/(1-x))^(alpha-1)+(1/(1-y))^(alpha-1)-1)^(-1/(alpha-1))
+    if (is.na(theta)) {
+      theta <- 3
+    }
+    if (theta >= 1) {
+      C <- x+y-1+((1/(1-x))^(theta-1)+(1/(1-y))^(theta-1)-1)^(-1/(theta-1))
       return(C) } else {
-        print("Error. Parameter alpha >= 1 is required")
+        print("Error. Parameter theta >= 1 is required")
       }
   } else {
     print("Input in [0,1] x [0,1] is required.")
@@ -55,7 +63,9 @@ C_Gamma_Frailty <- function(x, y, alpha = 3) {
 #' @param x It is required that \eqn{0 \le x \le 1}
 #' @param y It is required that \eqn{0 \le y \le 1}
 #' @param theta Parameter of the Gumbel Copula.
-#' It is required that `theta` \eqn{\ge 1}.
+#' It is required that `theta` \eqn{\ge 1}. If set to `NA`, `theta` is chosen such that
+#' Kendall's \eqn{\tau = 0.5}. Note that the parameter `theta` is only used, if `NA` value for
+#' `tau` is passed.
 #' @param tau Kendall's \eqn{\tau} for the Gumbel Copula. If set to `NA`, the
 #' value of Kendall's \eqn{\tau} is defined by `theta`.
 #' \itemize{
@@ -71,6 +81,9 @@ C_Gamma_Frailty <- function(x, y, alpha = 3) {
 #' y <- runif(10^2)
 #' sample <- C_Gumbel(x, y)
 C_Gumbel <- function(x, y, theta = VineCopula::BiCopTau2Par(family = 4, tau = 0.5, check.taus = TRUE), tau = NA) {
+  if (is.na(theta)) {
+    theta <- VineCopula::BiCopTau2Par(family = 4, tau = 0.5, check.taus = TRUE)
+  }
   if (!is.na(tau)) {
     theta <- VineCopula::BiCopTau2Par(family = 4, tau = tau, check.taus = TRUE)
   }
@@ -99,7 +112,9 @@ C_Gumbel <- function(x, y, theta = VineCopula::BiCopTau2Par(family = 4, tau = 0.
 #' @param x It is required that \eqn{0 \le x \le 1}
 #' @param y It is required that \eqn{0 \le y \le 1}
 #' @param theta Parameter of the Frank Copula.
-#' It is required that `theta` \eqn{\neq 0}.
+#' It is required that `theta` \eqn{=/= 0}. If set to `NA`, `theta` is chosen such that
+#' Kendall's \eqn{\tau = 0.5}. Note that the parameter `theta` is only used, if `NA` value for
+#' `tau` is passed.
 #' @param tau Kendall's \eqn{\tau} for the Frank Copula. If set to `NA`, the
 #' value of Kendall's \eqn{\tau} is defined by `theta`.
 #' \itemize{
@@ -115,6 +130,9 @@ C_Gumbel <- function(x, y, theta = VineCopula::BiCopTau2Par(family = 4, tau = 0.
 #' y <- runif(10^2)
 #' sample <- C_Frank(x, y)
 C_Frank <- function(x, y, theta = VineCopula::BiCopTau2Par(family = 5, tau = 0.5, check.taus = TRUE), tau = NA) {
+  if (is.na(theta)) {
+    theta <- VineCopula::BiCopTau2Par(family = 5, tau = 0.5, check.taus = TRUE)
+  }
   if (!is.na(tau)) {
     theta <- VineCopula::BiCopTau2Par(family = 5, tau = tau, check.taus = TRUE)
   }
@@ -143,7 +161,9 @@ C_Frank <- function(x, y, theta = VineCopula::BiCopTau2Par(family = 5, tau = 0.5
 #' @param x It is required that \eqn{0 \le x \le 1}
 #' @param y It is required that \eqn{0 \le y \le 1}
 #' @param theta Parameter of the Clayton Copula.
-#' It is required that `theta` \eqn{\ge -1}.
+#' It is required that `theta` \eqn{\ge -1}. If set to `NA`, `theta` is chosen such that
+#' Kendall's \eqn{\tau = 0.5}. Note that the parameter `theta` is only used, if `NA` value for
+#' `tau` is passed.
 #' @param tau Kendall's \eqn{\tau} for the Clayton Copula. If set to `NA`, the
 #' value of Kendall's \eqn{\tau} is defined by `theta`.
 #' \itemize{
@@ -159,6 +179,9 @@ C_Frank <- function(x, y, theta = VineCopula::BiCopTau2Par(family = 5, tau = 0.5
 #' y <- runif(10^2)
 #' sample <- C_Clayton(x, y)
 C_Clayton <- function(x, y, theta = VineCopula::BiCopTau2Par(family = 3, tau = 0.5, check.taus = TRUE), tau = NA) {
+  if (is.na(theta)) {
+    theta <- VineCopula::BiCopTau2Par(family = 3, tau = 0.5, check.taus = TRUE)
+  }
   if (!is.na(tau)) {
     theta <- VineCopula::BiCopTau2Par(family = 3, tau = tau, check.taus = TRUE)
   }
@@ -185,7 +208,9 @@ C_Clayton <- function(x, y, theta = VineCopula::BiCopTau2Par(family = 3, tau = 0
 #' @param x It is required that \eqn{0 \le x \le 1}
 #' @param y It is required that \eqn{0 \le y \le 1}
 #' @param theta Parameter of the Joe Copula.
-#' It is required that `theta` \eqn{\ge 1}.
+#' It is required that `theta` \eqn{\ge 1}. If set to `NA`, `theta` is chosen such that
+#' Kendall's \eqn{\tau = 0.5}. Note that the parameter `theta` is only used, if `NA` value for
+#' `tau` is passed.
 #' @param tau Kendall's \eqn{\tau} for the Joe Copula. If set to `NA`, the
 #' value of Kendall's \eqn{\tau} is defined by `theta`.
 #' \itemize{
@@ -201,6 +226,9 @@ C_Clayton <- function(x, y, theta = VineCopula::BiCopTau2Par(family = 3, tau = 0
 #' y <- runif(10^2)
 #' sample <- C_Joe(x, y)
 C_Joe <- function(x, y, theta = VineCopula::BiCopTau2Par(family = 6, tau = 0.5, check.taus = TRUE), tau = NA) {
+  if (is.na(theta)) {
+    theta <- VineCopula::BiCopTau2Par(family = 6, tau = 0.5, check.taus = TRUE)
+  }
   if (!is.na(tau)) {
     theta <- VineCopula::BiCopTau2Par(family = 6, tau = tau, check.taus = TRUE)
   }

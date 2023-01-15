@@ -8,12 +8,14 @@ solve_G_F(
   F_t_i_minus_1,
   G_t_i_minus_1,
   mu_C_B_t_i_minus_1,
-  C = copulagraphicr::C_independence,
-  error_A = 1e-08,
+  C,
+  error_A = 1e-07,
   error_B = 1e-05,
   i,
   p_1,
-  k
+  k,
+  theta = NA,
+  tau = NA
 )
 }
 \arguments{
@@ -42,6 +44,20 @@ See documentation of function \link[copulagraphicr]{estimate_quantities}.}
 
 \item{k}{Empirical estimate est \eqn{k(t[i])} for \eqn{P(X > t[i], Y > t[i])}.
 See documentaion of function \link[copulagraphicr]{estimate_quantities}.}
+
+\item{theta}{Parameter of the following copulas:
+\itemize{
+\item Gamma Frailty Copula, \code{theta} \eqn{\ge 1}
+\item Gumbel Copula, \code{theta} \eqn{\ge 1}
+\item Frank Copula, \code{theta} \eqn{=/= 0}
+\item Clayton Copula, \code{theta} \eqn{\ge -1}
+\item Joe's Copula, \code{theta} \eqn{\ge 1}
+}
+If set to \code{NA}, \code{theta} is chosen such that
+Kendall's \eqn{\tau = 0.5}. Note that the parameter \code{theta} is only used, if \code{NA} value for
+\code{tau} is passed.}
+
+\item{tau}{Kendall's \eqn{\tau}.}
 }
 \description{
 Two step iterative bisection scheme to solve the following system of non-linear equations:
@@ -82,14 +98,13 @@ as a solution. Else a new candidate for \eqn{F_t_i} is selected.
 # sample_data <- copulagraphicr::load_data(data_path = data_path)
 
 ## estimate empirical quantities:
-# est <- copulagraphicr::estimate_quantities(sample_data = sample_data)
+#' # G_t_i <- c(0)
 # t_grid <- est[[1]]
 # k <- est[[2]]
 # p_1 <- est[[3]]
 # p_2 <- est[[4]]
 }
 
-# G_t_i <- c(0)
 # F_hat <- c(0)
 # G_hat <- c(0)
 # mu_C_B <- c(0)
