@@ -4,12 +4,11 @@
 \alias{load_data}
 \title{Data Input: load competing risk data}
 \usage{
-load_data(
-  data_path = system.file("inst/Melanoma.csv", package = "copulagraphicr")
-)
+load_data(data_path = NA)
 }
 \arguments{
-\item{data_path}{Path to file. Files with extension '.csv' are supported.}
+\item{data_path}{Path to file. Files with extension '.csv' are supported. If
+\code{NA} is passed, the package data \code{Melanoma} will be loaded.}
 }
 \description{
 The \code{load_data} function loads data from \code{data_path} and extracts
