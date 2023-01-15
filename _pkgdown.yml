@@ -1,4 +1,4 @@
-destination: C:/Users/chess/OneDrive/Documents/R (git)/Archive
+destination: C:/Users/Sys.getenv("USERNAME")/OneDrive/Documents/R (git)/Archive
 
 development:
   mode: auto

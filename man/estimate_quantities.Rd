@@ -7,19 +7,20 @@
 estimate_quantities(sample_data)
 }
 \arguments{
-\item{sample_data}{Sample data consisting of observed competing risk data (T\eqn{_i}, \eqn{\delta_i}).
+\item{sample_data}{Sample data consisting of observed competing risk data (T\eqn{_1}, \eqn{\delta_1}), ..., (T\eqn{_n}, \eqn{\delta_n}).
 The dataset should be loaded using the \code{load_data} function.}
 }
 \description{
 In order to calculate the Copula-Graphic estimator the following quantities
 are needed
-\deqn{k(t) = pr(X>t, Y>t),
-p_1(t) = pr(X \le t, \delta = 1) and p_2(t) = pr(Y \le t, \delta = 0).}
-These quantities can be estimated by their empirical estimates
+\deqn{k(t[i]) = pr(X > t[i], Y > t[i]),
+p_1(t[i]) = pr(X \le t[i], \delta = 1) and p_2(t[i]) = pr(Y \le t[i], \delta = 0).}
+These quantities can be estimated by their empirical estimates. Given the sample
+data (T\eqn{_i}, \eqn{\delta_i}), we have
 \itemize{
-\item \eqn{est k(t_i) = 1/n \sum 1_(X_j > t_i, Y_j > t_i)},
-\item \eqn{est p_1(t_i) = 1/n \sum 1_(X_j \le t_i, X_j \le Y_j)},
-\item \eqn{est p_2(t_i) = 1/n \sum 1_(X_j \le t_i, X_j > Y_j)}.
+\item \eqn{est k(t[i]) = 1/n \sum_k 1_(T_k > t[i]) = 1/n \sum_k 1_(X_k > t[i], Y_k > t[i])},
+\item \eqn{est p_1(t[i]) = 1/n \sum_k 1_(X_k \le t[i], \delta_k = 1) = 1/n \sum_k 1_(X_k \le t[i], X_k \le Y_k)},
+\item \eqn{est p_2(t[i]) = 1/n \sum_k 1_(X_k \le t[i], \delta_k = 0) = 1/n \sum_k 1_(X_k \le t[i], X_k > Y_k)}.
 }
 }
 \examples{
