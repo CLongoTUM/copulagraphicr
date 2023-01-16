@@ -35,7 +35,7 @@
 #' parameter is given by the previous iteration step.
 #' @param mu_C_B_t_i_minus_1 The estimate for \eqn{mu_C(B_t[i-1]))}.
 #' This input parameter is given by the previous iteration step.
-#' @param C Copula function to be applied for the Copula-Graphic Estimator.
+#' @param copula Copula function to be applied for the Copula-Graphic Estimator.
 #' @param error_A Error tolerance for the first iteration step. The estimate for
 #' \eqn{G(t[i])} is accepted if \eqn{|mu_C(A(t[i])) -k(t[i])| <} `error_A`.
 #' @param error_B Error tolerance for the second iteration step. The estimated
@@ -60,12 +60,10 @@
 #' @param tau Kendall's \eqn{\tau}.
 #'
 #' @examples \donttest{## load data set:
-#' # data_path <- system.file("inst/Melanoma.csv", package = "copulagraphicr")
-#' # sample_data <- copulagraphicr::load_data(data_path = data_path)
+#' # sample_data <- copulagraphicr::load_data()
 #'
 #' ## estimate empirical quantities:
-#' #' # G_t_i <- c(0)
-# est <- copulagraphicr::estimate_quantities(sample_data = sample_data)
+#' # est <- copulagraphicr::estimate_quantities(sample_data = sample_data)
 #' # t_grid <- est[[1]]
 #' # k <- est[[2]]
 #' # p_1 <- est[[3]]
@@ -77,26 +75,23 @@
 #' # mu_C_B <- c(0)
 #' # mu_C_A <- c(0)
 #' #
-#' # for (i in 2:(length(t_grid))) {
-#' #   solve <- copulagraphicr::solve_G_F(F_t_i_minus_1 = F_hat[i-1],
+#' # solve <- copulagraphicr::solve_G_F(F_t_i_minus_1 = F_hat[i-1],
 #' #                      G_t_i_minus_1 = G_hat[i-1],
 #' #                      mu_C_B_t_i_minus_1 = mu_C_B[i-1],
-#' #                      C = copulagraphicr::C_independence,
-#' #                      i = i,
+#' #                      copula = copulagraphicr::C_Independence,
+#' #                      i = 2,
 #' #                      p_1 = p_1,
 #' #                      k = k)
-#' #   F_hat[i] <- solve[[1]]
-#' #   G_hat[i] <- solve[[2]]
-#' #   mu_C_B[i] <- solve[[3]]
-#' #   mu_C_A[i] <- solve[[4]]
-#' #   print(i)
-#' # }
-#'
+#' # F_hat[i] <- solve[[1]]
+#' # G_hat[i] <- solve[[2]]
+#' # mu_C_B[i] <- solve[[3]]
+#' # mu_C_A[i] <- solve[[4]]
 #' @export
 #'
-solve_G_F <- function(F_t_i_minus_1, G_t_i_minus_1,
+solve_G_F <- function(F_t_i_minus_1,
+                      G_t_i_minus_1,
                       mu_C_B_t_i_minus_1,
-                      C,
+                      copula,
                       error_A = 1e-7,
                       error_B = 1e-5,
                       i,
@@ -139,7 +134,8 @@ solve_G_F <- function(F_t_i_minus_1, G_t_i_minus_1,
         print("No solution found")
         break
       }
-      print(paste0("In iteration ", i, " Error B was adjusted to: ", error_B, " Eps B value is: ", eps_B))
+      print(paste0("In iteration ", i, " Error B was adjusted to: ", error_B,
+                   "Iteration_B count: ", iter_B, " Eps B value is: ", eps_B))
       iter_B <- 0
     }
 
@@ -148,8 +144,7 @@ solve_G_F <- function(F_t_i_minus_1, G_t_i_minus_1,
     iter_A <- 0
     ## error tolerance: |mu_C(A_t_i) - k(t_i)| < error_A
     while (eps_A > error_A) {
-      mu_C_A_i <- 1 - mean(c(lower_G, upper_G)) - F_t_i
-                  + C(x = F_t_i, y = mean(c(lower_G, upper_G)), theta = theta, tau = tau)
+      mu_C_A_i <- 1 - mean(c(lower_G, upper_G)) - F_t_i + copula(x = F_t_i, y = mean(c(lower_G, upper_G)), theta = theta, tau = tau)
       if (mu_C_A_i > k[i]) {
         # P(X > t_i, Y > t_i) < mu_C_A_i, so prob. to survive was too large / die was too low
         lower_G <- mean(c(lower_G, upper_G)) # increase prob. to die by choosing higher F
@@ -168,9 +163,7 @@ solve_G_F <- function(F_t_i_minus_1, G_t_i_minus_1,
     G_t_i <- mean(c(lower_G, upper_G))
 
     ## Step 2: check if the pair (F(t_i), G(t_i)) satisfies mu_C(B_t) = est p_1(t)
-    mu_C_B_i <- mu_C_B_t_i_minus_1 + F_t_i - F_t_i_minus_1
-                  + C(x = F_t_i_minus_1, y = G_t_i,  theta = theta, tau = tau)
-                  - C(x = F_t_i, y = G_t_i, theta = theta, tau = tau)
+    mu_C_B_i <- mu_C_B_t_i_minus_1 + F_t_i - F_t_i_minus_1 + copula(x = F_t_i_minus_1, y = G_t_i,  theta = theta, tau = tau) - copula(x = F_t_i, y = G_t_i, theta = theta, tau = tau)
 
     if (mu_C_B_i > p_1[i]) {
       # F(t_i) was too large
@@ -182,6 +175,5 @@ solve_G_F <- function(F_t_i_minus_1, G_t_i_minus_1,
     eps_B <- abs(mu_C_B_i - p_1[i])
     F_t_i <- mean(c(lower_F, upper_F))
   }
-  list <- list(F_t_i, G_t_i, mu_C_B_i, mu_C_A_i)
-  return(list)
+  return(list(F_t_i, G_t_i, mu_C_B_i, mu_C_A_i))
 }

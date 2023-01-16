@@ -8,7 +8,7 @@ solve_G_F(
   F_t_i_minus_1,
   G_t_i_minus_1,
   mu_C_B_t_i_minus_1,
-  C,
+  copula,
   error_A = 1e-07,
   error_B = 1e-05,
   i,
@@ -28,7 +28,7 @@ parameter is given by the previous iteration step.}
 \item{mu_C_B_t_i_minus_1}{The estimate for \eqn{mu_C(B_t[i-1]))}.
 This input parameter is given by the previous iteration step.}
 
-\item{C}{Copula function to be applied for the Copula-Graphic Estimator.}
+\item{copula}{Copula function to be applied for the Copula-Graphic Estimator.}
 
 \item{error_A}{Error tolerance for the first iteration step. The estimate for
 \eqn{G(t[i])} is accepted if \eqn{|mu_C(A(t[i])) -k(t[i])| <} \code{error_A}.}
@@ -94,11 +94,10 @@ as a solution. Else a new candidate for \eqn{F_t_i} is selected.
 }
 \examples{
 \donttest{## load data set:
-# data_path <- system.file("inst/Melanoma.csv", package = "copulagraphicr")
-# sample_data <- copulagraphicr::load_data(data_path = data_path)
+# sample_data <- copulagraphicr::load_data()
 
 ## estimate empirical quantities:
-#' # G_t_i <- c(0)
+# est <- copulagraphicr::estimate_quantities(sample_data = sample_data)
 # t_grid <- est[[1]]
 # k <- est[[2]]
 # p_1 <- est[[3]]
@@ -110,19 +109,15 @@ as a solution. Else a new candidate for \eqn{F_t_i} is selected.
 # mu_C_B <- c(0)
 # mu_C_A <- c(0)
 #
-# for (i in 2:(length(t_grid))) {
-#   solve <- copulagraphicr::solve_G_F(F_t_i_minus_1 = F_hat[i-1],
+# solve <- copulagraphicr::solve_G_F(F_t_i_minus_1 = F_hat[i-1],
 #                      G_t_i_minus_1 = G_hat[i-1],
 #                      mu_C_B_t_i_minus_1 = mu_C_B[i-1],
-#                      C = copulagraphicr::C_independence,
-#                      i = i,
+#                      copula = copulagraphicr::C_independence,
+#                      i = 2,
 #                      p_1 = p_1,
 #                      k = k)
-#   F_hat[i] <- solve[[1]]
-#   G_hat[i] <- solve[[2]]
-#   mu_C_B[i] <- solve[[3]]
-#   mu_C_A[i] <- solve[[4]]
-#   print(i)
-# }
-
+# F_hat[i] <- solve[[1]]
+# G_hat[i] <- solve[[2]]
+# mu_C_B[i] <- solve[[3]]
+# mu_C_A[i] <- solve[[4]]
 }

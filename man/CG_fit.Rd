@@ -4,7 +4,16 @@
 \alias{CG_fit}
 \title{Copula-Graphic Estimator}
 \usage{
-CG_fit(p_1, k, t_grid, copula, theta = NA, tau = NA)
+CG_fit(
+  p_1,
+  k,
+  t_grid,
+  copula,
+  error_A = 1e-07,
+  error_B = 1e-05,
+  theta = NA,
+  tau = NA
+)
 }
 \arguments{
 \item{p_1}{Empirical estimate est \eqn{p_1(t[i])} for \eqn{P(X \le t[i], \delta = 1)}.
@@ -16,6 +25,13 @@ See documentaion of function \link[copulagraphicr]{estimate_quantities}.}
 \item{t_grid}{Time grid of consisting of the unique event times \eqn{T}.}
 
 \item{copula}{The Copula to be assumed for calculating the Copula-Graphic Estimator.}
+
+\item{error_A}{Error tolerance for the first iteration step. The estimate for
+\eqn{G(t[i])} is accepted if \eqn{|mu_C(A(t[i])) -k(t[i])| <} \code{error_A}.}
+
+\item{error_B}{Error tolerance for the second iteration step. The estimated
+pair \eqn{(F(t[i]), G(t[i]))} is accepted if
+\eqn{|mu_C(B_t[i])) - p_1(t[i])| <} \code{error_B}.}
 
 \item{theta}{Parameter of the following copulas:
 \itemize{
@@ -33,4 +49,20 @@ Kendall's \eqn{\tau = 0.5}. Note that the parameter \code{theta} is only used, i
 }
 \description{
 Copula-Graphic Estimator
+}
+\examples{
+## load data set:
+# sample_data <- copulagraphicr::load_data()
+
+## estimate empirical quantities:
+# est <- copulagraphicr::estimate_quantities(sample_data = sample_data)
+# t_grid <- est[[1]]
+# k <- est[[2]]
+# p_1 <- est[[3]]
+# p_2 <- est[[4]]
+
+## Copula-Graphic Estimates for different input copulae:
+# est_Ind <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Independence)
+# est_Clayton <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Gumbel, tau = 0.5)
+# est_Frank <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Frank, tau = 0.5)
 }
