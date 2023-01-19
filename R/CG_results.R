@@ -2,18 +2,12 @@
 #'
 #' @param sample_data Competing risk data. If `NA` is passed, the function will
 #' load data from the `data_path` or use the package data `Melanoma`.
-#' @param load_data If `TRUE`, the function uses the `load_data` function
-#' to load the competing risk data from the `data_path`. If no `data_path` is
-#' passed, the package data `Melanoma` is loaded. If `FALSE`, the
-#' function uses the input data set `sample_data` that is passed as
-#' argument for `sample_data`.
 #' @param data_path Path to file with competing risk data. If `NA` is passed as input
 #' argument for `sample_data`, the function will use the `load_data` function to load
 #' the competing risk data from `data_path`. If `NA` is passed as input argument for
 #' `data_path`, the package data `Melanoma` is loaded.
 #' @param tau Kendall's \eqn{\tau}. This parameter is used to specify Kendall's \eqn{\tau}
 #' for the copulas that are used to calculate the Copula-Graphic estimator.
-#' @param copula Copula function to be applied for the Copula-Graphic Estimator.
 #' @param error_A Error tolerance for the first iteration step. The estimate for
 #' \eqn{G(t[i])} is accepted if \eqn{|mu_C(A(t[i])) -k(t[i])| <} `error_A`.
 #' @param error_B Error tolerance for the second iteration step. The estimated
@@ -25,6 +19,7 @@
 #' @param k Empirical estimate est \eqn{k(t[i])} for \eqn{P(X > t[i], Y > t[i])}.
 #' See documentaion of function \link[copulagraphicr]{estimate_quantities}. If `NA` is passed,
 #' the function `estimate_quantities`is called to calculate `k`.
+#' @param t_grid Time grid of consisting of the unique event times \eqn{T}.
 #'
 #' @export
 #'
@@ -89,15 +84,14 @@ y_lim_lower <- round(min(S_Frank, S_Gumbel, S_Clayton, S_Joe, S_Ind) - 0.15, 1)
 
 grDevices::dev.new()
 coord <- graphics::par("usr")
-plot(t_grid[1:length(S_Joe)],S_Joe,type="s",ylim = c(y_lim_lower,1), xlab="time", ylab="survival function", col = "white")
-lines(fit, col = "red", conf.int = FALSE, type="s")
-lines(t_grid[1:length(S_Frank)], S_Frank, col = "orange", type="s")
-lines(t_grid[1:length(S_Gamma)], S_Gamma, col = "green", type="s")
-lines(t_grid[1:length(S_Gumbel)], S_Gumbel, col = "purple", type="s")
-lines(t_grid[1:length(S_Clayton)], S_Clayton, col = "blue", type="s")
-lines(t_grid[1:length(S_Joe)], S_Joe, col = "brown", type="s")
-legend(0, y_lim_lower+0.25, legend = c("Independence", "Frank's", "Gamma Frailty", "Gumbel", "Clayton", "Joe"),
+graphics::plot(t_grid[1:length(S_Joe)],S_Joe,type="s",ylim = c(y_lim_lower,1), xlab="time", ylab="survival function", col = "white")
+graphics::lines(fit, col = "red", conf.int = FALSE, type="s")
+graphics::lines(t_grid[1:length(S_Frank)], S_Frank, col = "orange", type="s")
+graphics::lines(t_grid[1:length(S_Gamma)], S_Gamma, col = "green", type="s")
+graphics::lines(t_grid[1:length(S_Gumbel)], S_Gumbel, col = "purple", type="s")
+graphics::lines(t_grid[1:length(S_Clayton)], S_Clayton, col = "blue", type="s")
+graphics::lines(t_grid[1:length(S_Joe)], S_Joe, col = "brown", type="s")
+graphics::legend(0, y_lim_lower+0.25, legend = c("Independence", "Frank's", "Gamma Frailty", "Gumbel", "Clayton", "Joe"),
        c("red", "orange", "green", "purple", "blue", "brown"), cex = 1, box.lty = 0, lty = 1,
        fill = 0, border = 0, x.intersp = 0.2, y.intersp = 0.8)
 }
-CG_results()

@@ -2,6 +2,7 @@
 
 export("%>%")
 export(CG_fit)
+export(CG_results)
 export(C_Clayton)
 export(C_Frank)
 export(C_Gamma_Frailty)

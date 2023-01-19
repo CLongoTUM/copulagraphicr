@@ -112,7 +112,7 @@ as a solution. Else a new candidate for \eqn{F_t_i} is selected.
 # solve <- copulagraphicr::solve_G_F(F_t_i_minus_1 = F_hat[i-1],
 #                      G_t_i_minus_1 = G_hat[i-1],
 #                      mu_C_B_t_i_minus_1 = mu_C_B[i-1],
-#                      copula = copulagraphicr::C_independence,
+#                      copula = copulagraphicr::C_Independence,
 #                      i = 2,
 #                      p_1 = p_1,
 #                      k = k)
