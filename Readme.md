@@ -5,9 +5,17 @@ The package allows the user to analyze a dataset consisting of
 observations of two competing risks. The package contains a function to
 load the competing risk data, a function to calculate characteristic
 quantities of the competing data and a function to calculate the
-corresponding Copula-Graphic estimator for a given Copula. Further the
+corresponding Copula-Graphic estimator for a given Copula. 
+
+Further the
 package contains predefined plots of the sample data and the
 Copula-Graphic estimator.
+
+The Copula-Graphic estimator is based on the paper 
+Ming Zheng and John P. Klein: "Estimates of Marginal Survival for Dependent Competing Risks Based on an Assumed
+Copula".
+The two-step iterative scheme that is used to solve for the
+Copula-Graphic estimator is derived in the file "Copula_Graphic_Estimator_Longo_Claudio" in "./inst".   
 
 | Version    | Maintainer                                 |
 |:-----------|:-------------------------------------------|
