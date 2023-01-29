@@ -44,3 +44,137 @@ idv_data <- data.frame(as.list(data))
 
 ```{r, child = "inst/1_Installation.Rmd"}
 ```
+
+## Initialize sample data and estimates for k, p_1 and p_2.
+```{r RUN: initialize quantities, include = FALSE, echo = FALSE, eval = TRUE, message = FALSE, results = 'hide'}
+## load package sample data (competing risk data)
+sample_data <- copulagraphicr::load_data(data_path = NA)
+
+## estimate empirical quantities from sample data
+est <- copulagraphicr::estimate_quantities(sample_data = sample_data)
+t_grid <- est[[1]]
+k <- est[[2]]
+p_1 <- est[[3]]
+p_2 <- est[[4]]
+```
+
+```{r initialize quantities, include = TRUE, eval = FALSE}
+## load package sample data (competing risk data, package data)
+sample_data <- copulagraphicr::load_data(data_path = NA)
+
+## visualize competing risk data 
+copulagraphicr::visualize_data(sample_data = sample_data)
+```
+
+```{r plot sample data, echo = FALSE, self_contained = FALSE}
+plot(sample_data)
+coord <- graphics::par("usr")
+graphics::points(sample_data[sample_data$delta == 1, ], col = "red")
+graphics::points(sample_data[sample_data$delta == 0, ], col = "blue")
+graphics::legend(x = 0.65 * coord[2], y = 0.8 * coord[4], legend = c("T = X, delta = 1", "T = Y, delta = 0"),
+         col = c("red", "blue"), pch = 1, cex = 1, box.lty = 0)
+graphics::title("Competing risk data, observations (T = min(X,Y), delta)")
+```
+
+```{r initialize quantities (cont.), include = TRUE, eval = FALSE}
+## estimate empirical quantities from sample data
+est <- copulagraphicr::estimate_quantities(sample_data = sample_data)
+t_grid <- est[[1]]
+k <- est[[2]]
+p_1 <- est[[3]]
+p_2 <- est[[4]]
+```
+
+```{r plot initialize quantities, include = TRUE, echo = FALSE, eval = TRUE, self_contained = FALSE}
+## estimate empirical quantities from sample data
+plot(t_grid, k, type = "s")
+lines(t_grid, p_1, col = "blue", ylim = c(0,1), type = "s")
+lines(t_grid, p_2, col = "orange")
+legend(0.1, 0.8, c("k", "p_1", "p_2"), c("black", "blue", "orange"),
+       cex = 0.8, box.lty = 0)
+graphics::title("Empirical estimates for k, p_1 and p_2")
+```
+
+
+## The Copula-Graphic estimator for different assumed copulas
+```{r, calculate CG estimator, include = TRUE, eval = FALSE}
+## initialize error terms and tau for Copula-Graphic estimator
+error_A <- 1e-3
+error_B <- 1e-3
+tau <- 0.5
+
+## calculate Copula-Graphic estimator for different assumed copulas
+est_Frank <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Frank, error_A = error_A, error_B = error_B, tau = tau)
+est_Gumbel <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Gumbel, error_A = error_A, error_B = error_B, tau = tau)
+est_Joe <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Joe, error_A = error_A, error_B = error_B, tau = tau)
+est_Ind <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Independence, error_A = error_A, error_B = error_B, tau = tau)
+
+## extract Copula-Graphic estimate of survival function
+S_Frank <- 1 - est_Frank[[1]]
+S_Gumbel <- 1 - est_Gumbel[[1]]
+S_Joe <- 1 -est_Joe[[1]]
+S_Ind <- 1 - est_Ind[[1]]
+```
+
+```{r, RUN: calculate CG estimator, include = FALSE, echo = FALSE, eval = TRUE, message = FALSE, results = 'hide'}
+## initialize error terms and tau for Copula-Graphic estimator
+error_A <- 1e-6
+error_B <- 1e-5
+tau <- 0.5
+
+## calculate Copula-Graphic estimator for different assumed copulas
+est_Frank <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Frank, error_A = error_A, error_B = error_B, tau = tau)
+est_Gumbel <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Gumbel, error_A = error_A, error_B = error_B, tau = tau)
+est_Joe <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Joe, error_A = error_A, error_B = error_B, tau = tau)
+est_Ind <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Independence, error_A = error_A, error_B = error_B, tau = tau)
+
+## extract Copula-Graphic estimate of survival function
+S_Frank <- 1 - est_Frank[[1]]
+S_Gumbel <- 1 - est_Gumbel[[1]]
+S_Joe <- 1 -est_Joe[[1]]
+S_Ind <- 1 - est_Ind[[1]]
+```
+
+## Kaplan-Meier estimator as benchmark
+```{r, Kaplan-Meier estimator, include = TRUE, eval = TRUE}
+## standard estimator: survival fit, Kaplan-Meier for censored data
+d <- rep(0, nrow(sample_data))
+x <- sample_data$T
+e <- sample_data$delta
+fit <- survival::survfit(survival::Surv(d, x, e) ~ 1)
+```
+
+## Plot of Copula-Graphic estimates
+```{r, plot, include = TRUE, eval = FALSE}
+## Plot
+y_lim_lower <- round(min(S_Frank, S_Gumbel, S_Frank, S_Ind) - 0.15, 1)
+
+coord <- graphics::par("usr")
+graphics::plot(t_grid[1:length(S_Ind)],S_Ind,type="s",
+               ylim = c(y_lim_lower,1), xlab="time", ylab="survival function", col = "white")
+graphics::lines(fit, col = "red", conf.int = FALSE, type="s")
+graphics::lines(t_grid[1:length(S_Frank)], S_Frank, col = "orange", type="s")
+graphics::lines(t_grid[1:length(S_Gumbel)], S_Gumbel, col = "purple", type="s")
+graphics::lines(t_grid[1:length(S_Joe)], S_Joe, col = "green", type="s")
+graphics::legend(0, y_lim_lower+0.25, legend = c("Independence", "Frank's", "Gumbel", "Joe"),
+       c("red", "orange", "purple", "green"), cex = 1, box.lty = 0, lty = 1,
+       fill = 0, border = 0, x.intersp = 0.2, y.intersp = 0.8)
+graphics::title("Copula-Graphic estimator for different assumed copulas")
+```
+
+```{r, RUN: plot, echo = FALSE, eval = TRUE, self_contained = FALSE}
+## Plot
+y_lim_lower <- round(min(S_Frank, S_Gumbel, S_Frank, S_Ind) - 0.15, 1)
+
+coord <- graphics::par("usr")
+plot(t_grid[1:length(S_Ind)],S_Ind,type="s",
+               ylim = c(y_lim_lower,1), xlab="time", ylab="survival function", col = "white")
+graphics::lines(fit, col = "red", conf.int = FALSE, type="s")
+graphics::lines(t_grid[1:length(S_Frank)], S_Frank, col = "orange", type="s")
+graphics::lines(t_grid[1:length(S_Gumbel)], S_Gumbel, col = "purple", type="s")
+graphics::lines(t_grid[1:length(S_Joe)], S_Joe, col = "green", type="s")
+graphics::legend(0, y_lim_lower+0.25, legend = c("Independence", "Frank's", "Gumbel", "Joe"),
+       c("red", "orange", "purple", "green"), cex = 1, box.lty = 0, lty = 1,
+       fill = 0, border = 0, x.intersp = 0.2, y.intersp = 0.8)
+graphics::title("Copula-Graphic estimator for different assumed copulas")
+```

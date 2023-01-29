@@ -31,13 +31,11 @@
 #'
 #' ## load data from data_path -> pass input for data_path
 #' # CG_results(sample_data = NA, load_data = TRUE, data_path = data_path)
-
-
 CG_results <- function(sample_data = NA, data_path = NA, tau = 0.5, error_A = 1e-6, error_B = 1e-5,
                        k = NA, p_1 = NA, t_grid = NA) {
 
 ## if no sample_data is loaded, load sample data
-if (is.na(sample_data)) {
+if (is.na(sample_data[[1]][1])) {
   if (is.na(data_path)) {
     sample_data <- copulagraphicr::load_data()
   } else if (!is.na(data_path)) {
@@ -46,7 +44,7 @@ if (is.na(sample_data)) {
 }
 
 ## if no estimates are loaded, calculate empirical quantities
-if (is.na(k) | is.na(p_1) | is.na(t_grid)) {
+if (is.na(k[1]) | is.na(p_1[1]) | is.na(t_grid[1])) {
   est <- copulagraphicr::estimate_quantities(sample_data = sample_data)
 
   t_grid <- est[[1]]
@@ -94,4 +92,6 @@ graphics::lines(t_grid[1:length(S_Joe)], S_Joe, col = "brown", type="s")
 graphics::legend(0, y_lim_lower+0.25, legend = c("Independence", "Frank's", "Gamma Frailty", "Gumbel", "Clayton", "Joe"),
        c("red", "orange", "green", "purple", "blue", "brown"), cex = 1, box.lty = 0, lty = 1,
        fill = 0, border = 0, x.intersp = 0.2, y.intersp = 0.8)
+
+return(list(S_Frank, S_Gumbel, S_Clayton, S_Joe, S_Ind))
 }

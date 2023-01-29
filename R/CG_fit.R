@@ -74,12 +74,3 @@ CG_fit <- function(p_1,
     }
   return(list(F_hat, G_hat))
 }
-
-
-# est_ind <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Independence, error_A = 1e-6, error_B = 1e-3)
-# est_Clayton <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Gumbel, tau = 0.5, error_A = 1e-6, error_B = 1e-3)
-# est_Frank <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Frank, error_A = 1e-6, error_B = 1e-3)
-#
-# plot(t_grid, 1-est_ind[[1]], type = "s", ylim = c(0,1))
-# lines(t_grid, 1-est_Clayton[[1]], type = "s", ylim = c(0,1), col = "red")
-# lines(t_grid, 1-est_Frank[[1]], type = "s", ylim = c(0,1), col = "orange")

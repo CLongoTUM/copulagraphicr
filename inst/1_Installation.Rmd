@@ -12,9 +12,6 @@ repodir = paste0("M:/", desc::desc()$get_field("Organisationseinheit"))) -->
 
 
 ```{r setup_idv_repo, eval = FALSE, include = TRUE}
-# install latest released package version 
-install.packages(params$pkg_name,
-                 type = "source",
-                 repos = paste0("file:C:/", params$pkg_name))
-
+## install latest released package version from git repository
+remotes::install_github("https://github.com/CLongoTUM/copulagraphicr.git")
 ```

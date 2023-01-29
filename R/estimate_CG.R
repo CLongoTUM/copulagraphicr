@@ -134,8 +134,8 @@ solve_G_F <- function(F_t_i_minus_1,
         print("No solution found")
         break
       }
-      print(paste0("In iteration ", i, " Error B was adjusted to: ", error_B,
-                   "Iteration_B count: ", iter_B, " Eps B value is: ", eps_B))
+      print(paste0("In iteration ", i, " Error_B was adjusted to: ", error_B,
+                   ", Iteration_B count: ", iter_B, ", Eps_B value: ", eps_B))
       iter_B <- 0
     }
 
