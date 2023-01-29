@@ -105,4 +105,4 @@ graphics::legend(0, y_lim_lower+0.25, legend = c("Independence", "Frank's", "Gum
 graphics::title("Copula-Graphic estimator for different assumed copulas")
 ```
 
-![](README_files/figure-gfm/RUN:%20plot-1.png)<!-- -->
+![](README_files/figure-gfm/plot%20CG%20estimate-1.png)<!-- -->

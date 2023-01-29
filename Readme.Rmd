@@ -162,7 +162,7 @@ graphics::legend(0, y_lim_lower+0.25, legend = c("Independence", "Frank's", "Gum
 graphics::title("Copula-Graphic estimator for different assumed copulas")
 ```
 
-```{r, RUN: plot, echo = FALSE, eval = TRUE, self_contained = FALSE}
+```{r plot CG estimate, echo = FALSE, eval = TRUE}
 ## Plot
 y_lim_lower <- round(min(S_Frank, S_Gumbel, S_Frank, S_Ind) - 0.15, 1)
 
