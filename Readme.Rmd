@@ -17,18 +17,22 @@ comment = "#>"
 
 ```{r, include = FALSE}
 # https://stackoverflow.com/a/43699235
-default_source_hook <- knitr::knit_hooks$get('source')
+default_source_hook <- knitr::knit_hooks$get("source")
 
-knitr::knit_hooks$set(source = function(x, options) {
-  x <- stringr::str_replace_all(x, pattern = 'params\\$pkg_name', paste0('"', params$pkg_name))
-  default_source_hook(x, options)
-})
+knitr::knit_hooks$set(
+  source = function(x, options) {
+    x <- stringr::str_replace_all(
+      x,
+      pattern = "params\\$pkg_name",
+      paste0('"', params$pkg_name)
+    )
+    default_source_hook(x, options)
+  }
+)
 ```
 
 ```{r pkg_meta_data, eval = TRUE, include = FALSE}
-fields <- c("Version",
-            "Maintainer"
-            )
+fields <- c("Version", "Maintainer")
 
 data <- desc::desc()$get(fields)
 data$Maintainer <- desc::desc_get_maintainer()
@@ -45,54 +49,114 @@ idv_data <- data.frame(as.list(data))
 ```{r, child = "inst/1_Installation.Rmd"}
 ```
 
+## Initialize object of `copula_graphic` class
+```{r RUN: initialize object of `copula_graphic` class, include = TRUE, echo = TRUE, eval = TRUE, message = FALSE, results = 'hide'}
+library(copulagraphicr)
+copula_graphic <- new("copula_graphic")
+```
+
 ## Initialize sample data and estimates for k, p_1 and p_2.
-```{r RUN: initialize quantities, include = FALSE, echo = FALSE, eval = TRUE, message = FALSE, results = 'hide'}
+```{r RUN: initialize quantities, include = TRUE, echo = FALSE, eval = TRUE, message = FALSE, results = 'hide'}
 ## load package sample data (competing risk data)
-sample_data <- copulagraphicr::load_data(data_path = NA)
+copula_graphic@sample_data <- copulagraphicr::load_data(data_path = NA)
 
 ## estimate empirical quantities from sample data
-est <- copulagraphicr::estimate_quantities(sample_data = sample_data)
-t_grid <- est[[1]]
-k <- est[[2]]
-p_1 <- est[[3]]
-p_2 <- est[[4]]
+est <- copulagraphicr::estimate_quantities(
+  sample_data = copula_graphic@sample_data
+)
+
+copula_graphic@empirical_quantities$t_grid <- est[[1]]
+copula_graphic@empirical_quantities$k <- est[[2]]
+copula_graphic@empirical_quantities$p_1 <- est[[3]]
+copula_graphic@empirical_quantities$p_2 <- est[[4]]
 ```
+
 
 ```{r initialize quantities, include = TRUE, eval = FALSE}
 ## load package sample data (competing risk data, package data)
-sample_data <- copulagraphicr::load_data(data_path = NA)
+copula_graphic@sample_data <- copulagraphicr::load_data(
+  data_path = NA
+)
 
-## visualize competing risk data 
-copulagraphicr::visualize_data(sample_data = sample_data)
+## visualize competing risk data
+copulagraphicr::visualize_data(
+  sample_data = copula_graphic@sample_data
+)
 ```
 
 ```{r plot sample data, echo = FALSE, self_contained = FALSE}
-plot(sample_data)
+plot(copula_graphic@sample_data)
 coord <- graphics::par("usr")
-graphics::points(sample_data[sample_data$delta == 1, ], col = "red")
-graphics::points(sample_data[sample_data$delta == 0, ], col = "blue")
-graphics::legend(x = 0.65 * coord[2], y = 0.8 * coord[4], legend = c("T = X, delta = 1", "T = Y, delta = 0"),
-         col = c("red", "blue"), pch = 1, cex = 1, box.lty = 0)
-graphics::title("Competing risk data, observations (T = min(X,Y), delta)")
+graphics::points(
+  x = copula_graphic@sample_data[
+    copula_graphic@sample_data$delta == 1,
+  ],
+  col = "red"
+)
+graphics::points(
+  x = copula_graphic@sample_data[
+    copula_graphic@sample_data$delta == 0,
+  ],
+  col = "blue"
+)
+graphics::legend(
+  x = 0.65 * coord[2],
+  y = 0.8 * coord[4],
+  legend = c("T = X, delta = 1", "T = Y, delta = 0"),
+  col = c("red", "blue"),
+  pch = 1,
+  cex = 1,
+  box.lty = 0
+)
+graphics::title(
+  "Competing risk data, observations (T = min(X,Y), delta)"
+)
 ```
 
 ```{r initialize quantities (cont.), include = TRUE, eval = FALSE}
 ## estimate empirical quantities from sample data
-est <- copulagraphicr::estimate_quantities(sample_data = sample_data)
-t_grid <- est[[1]]
-k <- est[[2]]
-p_1 <- est[[3]]
-p_2 <- est[[4]]
+est <- copulagraphicr::estimate_quantities(
+  sample_data = copula_graphic@sample_data
+)
+
+copula_graphic@empirical_quantities$t_grid <- est[[1]]
+copula_graphic@empirical_quantities$k <- est[[2]]
+copula_graphic@empirical_quantities$p_1 <- est[[3]]
+copula_graphic@empirical_quantities$p_2 <- est[[4]]
 ```
 
 ```{r plot initialize quantities, include = TRUE, echo = FALSE, eval = TRUE, self_contained = FALSE}
 ## estimate empirical quantities from sample data
-plot(t_grid, k, type = "s")
-lines(t_grid, p_1, col = "blue", ylim = c(0,1), type = "s")
-lines(t_grid, p_2, col = "orange")
-legend(0.1, 0.8, c("k", "p_1", "p_2"), c("black", "blue", "orange"),
-       cex = 0.8, box.lty = 0)
-graphics::title("Empirical estimates for k, p_1 and p_2")
+plot(
+  x = copula_graphic@empirical_quantities$t_grid,
+  y = copula_graphic@empirical_quantities$k,
+  type = "s",
+  xlab = "t",
+  ylab = "prob"
+)
+lines(
+  x = copula_graphic@empirical_quantities$t_grid,
+  y = copula_graphic@empirical_quantities$p_1,
+  col = "blue",
+  ylim = c(0, 1),
+  type = "s"
+)
+lines(
+  x = copula_graphic@empirical_quantities$t_grid,
+  y = copula_graphic@empirical_quantities$p_2,
+  col = "orange"
+)
+legend(
+  0.1,
+  0.8,
+  c("k", "p_1", "p_2"),
+  c("black", "blue", "orange"),
+  cex = 0.8,
+  box.lty = 0
+)
+graphics::title(
+  "Empirical estimates for k, p_1 and p_2"
+)
 ```
 
 
@@ -104,15 +168,47 @@ error_B <- 1e-3
 tau <- 0.5
 
 ## calculate Copula-Graphic estimator for different assumed copulas
-est_Frank <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Frank, error_A = error_A, error_B = error_B, tau = tau)
-est_Gumbel <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Gumbel, error_A = error_A, error_B = error_B, tau = tau)
-est_Joe <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Joe, error_A = error_A, error_B = error_B, tau = tau)
-est_Ind <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Independence, error_A = error_A, error_B = error_B, tau = tau)
+est_Frank <- copulagraphicr::CG_fit(
+  k = copula_graphic@empirical_quantities$k,
+  p_1 = copula_graphic@empirical_quantities$p_1,
+  t_grid = copula_graphic@empirical_quantities$t_grid,
+  copula = copulagraphicr::C_Frank,
+  error_A = error_A,
+  error_B = error_B,
+  tau = tau
+)
+est_Gumbel <- copulagraphicr::CG_fit(
+  k = copula_graphic@empirical_quantities$k,
+  p_1 = copula_graphic@empirical_quantities$p_1,
+  t_grid = copula_graphic@empirical_quantities$t_grid,
+  copula = copulagraphicr::C_Gumbel,
+  error_A = error_A,
+  error_B = error_B,
+  tau = tau
+)
+est_Joe <- copulagraphicr::CG_fit(
+  k = copula_graphic@empirical_quantities$k,
+  p_1 = copula_graphic@empirical_quantities$p_1,
+  t_grid = copula_graphic@empirical_quantities$t_grid,
+  copula = copulagraphicr::C_Joe,
+  error_A = error_A,
+  error_B = error_B,
+  tau = tau
+)
+est_Ind <- copulagraphicr::CG_fit(
+  k = copula_graphic@empirical_quantities$k,
+  p_1 = copula_graphic@empirical_quantities$p_1,
+  t_grid = copula_graphic@empirical_quantities$t_grid,
+  copula = copulagraphicr::C_Independence,
+  error_A = error_A,
+  error_B = error_B,
+  tau = tau
+)
 
 ## extract Copula-Graphic estimate of survival function
 S_Frank <- 1 - est_Frank[[1]]
 S_Gumbel <- 1 - est_Gumbel[[1]]
-S_Joe <- 1 -est_Joe[[1]]
+S_Joe <- 1 - est_Joe[[1]]
 S_Ind <- 1 - est_Ind[[1]]
 ```
 
@@ -123,24 +219,56 @@ error_B <- 1e-5
 tau <- 0.5
 
 ## calculate Copula-Graphic estimator for different assumed copulas
-est_Frank <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Frank, error_A = error_A, error_B = error_B, tau = tau)
-est_Gumbel <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Gumbel, error_A = error_A, error_B = error_B, tau = tau)
-est_Joe <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Joe, error_A = error_A, error_B = error_B, tau = tau)
-est_Ind <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Independence, error_A = error_A, error_B = error_B, tau = tau)
+est_Frank <- copulagraphicr::CG_fit(
+  k = copula_graphic@empirical_quantities$k,
+  p_1 = copula_graphic@empirical_quantities$p_1,
+  t_grid = copula_graphic@empirical_quantities$t_grid,
+  copula = copulagraphicr::C_Frank,
+  error_A = error_A,
+  error_B = error_B,
+  tau = tau
+)
+est_Gumbel <- copulagraphicr::CG_fit(
+  k = copula_graphic@empirical_quantities$k,
+  p_1 = copula_graphic@empirical_quantities$p_1,
+  t_grid = copula_graphic@empirical_quantities$t_grid,
+  copula = copulagraphicr::C_Gumbel,
+  error_A = error_A,
+  error_B = error_B,
+  tau = tau
+)
+est_Joe <- copulagraphicr::CG_fit(
+  k = copula_graphic@empirical_quantities$k,
+  p_1 = copula_graphic@empirical_quantities$p_1,
+  t_grid = copula_graphic@empirical_quantities$t_grid,
+  copula = copulagraphicr::C_Joe,
+  error_A = error_A,
+  error_B = error_B,
+  tau = tau
+)
+est_Ind <- copulagraphicr::CG_fit(
+  k = copula_graphic@empirical_quantities$k,
+  p_1 = copula_graphic@empirical_quantities$p_1,
+  t_grid = copula_graphic@empirical_quantities$t_grid,
+  copula = copulagraphicr::C_Independence,
+  error_A = error_A,
+  error_B = error_B,
+  tau = tau
+)
 
 ## extract Copula-Graphic estimate of survival function
 S_Frank <- 1 - est_Frank[[1]]
 S_Gumbel <- 1 - est_Gumbel[[1]]
-S_Joe <- 1 -est_Joe[[1]]
+S_Joe <- 1 - est_Joe[[1]]
 S_Ind <- 1 - est_Ind[[1]]
 ```
 
 ## Kaplan-Meier estimator as benchmark
 ```{r, Kaplan-Meier estimator, include = TRUE, eval = TRUE}
 ## standard estimator: survival fit, Kaplan-Meier for censored data
-d <- rep(0, nrow(sample_data))
-x <- sample_data$T
-e <- sample_data$delta
+d <- rep(0, nrow(copula_graphic@sample_data))
+x <- copula_graphic@sample_data$T
+e <- copula_graphic@sample_data$delta
 fit <- survival::survfit(survival::Surv(d, x, e) ~ 1)
 ```
 
@@ -150,16 +278,55 @@ fit <- survival::survfit(survival::Surv(d, x, e) ~ 1)
 y_lim_lower <- round(min(S_Frank, S_Gumbel, S_Frank, S_Ind) - 0.15, 1)
 
 coord <- graphics::par("usr")
-graphics::plot(t_grid[1:length(S_Ind)],S_Ind,type="s",
-               ylim = c(y_lim_lower,1), xlab="time", ylab="survival function", col = "white")
-graphics::lines(fit, col = "red", conf.int = FALSE, type="s")
-graphics::lines(t_grid[1:length(S_Frank)], S_Frank, col = "orange", type="s")
-graphics::lines(t_grid[1:length(S_Gumbel)], S_Gumbel, col = "purple", type="s")
-graphics::lines(t_grid[1:length(S_Joe)], S_Joe, col = "green", type="s")
-graphics::legend(0, y_lim_lower+0.25, legend = c("Independence", "Frank's", "Gumbel", "Joe"),
-       c("red", "orange", "purple", "green"), cex = 1, box.lty = 0, lty = 1,
-       fill = 0, border = 0, x.intersp = 0.2, y.intersp = 0.8)
-graphics::title("Copula-Graphic estimator for different assumed copulas")
+graphics::plot(
+  copula_graphic@empirical_quantities$t_grid[1:length(S_Ind)],
+  S_Ind,
+  type = "s",
+  ylim = c(y_lim_lower, 1),
+  xlab = "time",
+  ylab = "survival function",
+  col = "white"
+)
+graphics::lines(
+  fit,
+  col = "red",
+  conf.int = FALSE,
+  type = "s"
+)
+graphics::lines(
+  copula_graphic@empirical_quantities$t_grid[1:length(S_Frank)],
+  S_Frank,
+  col = "orange",
+  type = "s"
+)
+graphics::lines(
+  copula_graphic@empirical_quantities$t_grid[1:length(S_Gumbel)],
+  S_Gumbel,
+  col = "purple",
+  type = "s"
+)
+graphics::lines(
+  copula_graphic@empirical_quantities$t_grid[1:length(S_Joe)],
+  S_Joe,
+  col = "green",
+  type = "s"
+)
+graphics::legend(
+  0,
+  y_lim_lower+0.25,
+  legend = c("Independence", "Frank's", "Gumbel", "Joe"),
+  c("red", "orange", "purple", "green"),
+  cex = 1,
+  box.lty = 0,
+  lty = 1,
+  fill = 0,
+  border = 0,
+  x.intersp = 0.2,
+  y.intersp = 0.8
+)
+graphics::title(
+  "Copula-Graphic estimator for different assumed copulas"
+)
 ```
 
 ```{r plot CG estimate, echo = FALSE, eval = TRUE}
@@ -167,14 +334,53 @@ graphics::title("Copula-Graphic estimator for different assumed copulas")
 y_lim_lower <- round(min(S_Frank, S_Gumbel, S_Frank, S_Ind) - 0.15, 1)
 
 coord <- graphics::par("usr")
-plot(t_grid[1:length(S_Ind)],S_Ind,type="s",
-               ylim = c(y_lim_lower,1), xlab="time", ylab="survival function", col = "white")
-graphics::lines(fit, col = "red", conf.int = FALSE, type="s")
-graphics::lines(t_grid[1:length(S_Frank)], S_Frank, col = "orange", type="s")
-graphics::lines(t_grid[1:length(S_Gumbel)], S_Gumbel, col = "purple", type="s")
-graphics::lines(t_grid[1:length(S_Joe)], S_Joe, col = "green", type="s")
-graphics::legend(0, y_lim_lower+0.25, legend = c("Independence", "Frank's", "Gumbel", "Joe"),
-       c("red", "orange", "purple", "green"), cex = 1, box.lty = 0, lty = 1,
-       fill = 0, border = 0, x.intersp = 0.2, y.intersp = 0.8)
-graphics::title("Copula-Graphic estimator for different assumed copulas")
+plot(
+  copula_graphic@empirical_quantities$t_grid[1:length(S_Ind)],
+  S_Ind,
+  type = "s",
+  ylim = c(y_lim_lower,1),
+  xlab = "time",
+  ylab = "survival function",
+  col = "white"
+)
+graphics::lines(
+  fit,
+  col = "red",
+  conf.int = FALSE,
+  type = "s"
+)
+graphics::lines(
+  copula_graphic@empirical_quantities$t_grid[1:length(S_Frank)],
+  S_Frank,
+  col = "orange",
+  type = "s"
+)
+graphics::lines(
+  copula_graphic@empirical_quantities$t_grid[1:length(S_Gumbel)],
+  S_Gumbel,
+  col = "purple",
+  type="s"
+)
+graphics::lines(
+  copula_graphic@empirical_quantities$t_grid[1:length(S_Joe)],
+  S_Joe,
+  col = "green",
+  type = "s"
+)
+graphics::legend(
+  0,
+  y_lim_lower + 0.25,
+  legend = c("Independence", "Frank's", "Gumbel", "Joe"),
+  c("red", "orange", "purple", "green"),
+  cex = 1,
+  box.lty = 0,
+  lty = 1,
+  fill = 0,
+  border = 0,
+  x.intersp = 0.2,
+  y.intersp = 0.8
+)
+graphics::title(
+  "Copula-Graphic estimator for different assumed copulas"
+)
 ```

@@ -23,7 +23,7 @@ setClass(
     kaplan_meier = "data.frame"
   ),
   prototype = prototype(
-    sample_data = copulagraphicr::load_data(data_path = NA),
+    sample_data = data.frame(),
     empirical_quantities = list(
       t_grid = NA_real_,
       k = NA_real_,
@@ -31,19 +31,19 @@ setClass(
       p_2 = NA_real_
     ),
     param_frank = list(
-      copula = copulagraphicr::C_Frank,
+      copula = "Frank",
       tau = NA
     ),
     est_frank = list(),
     surv_frank = data.frame(),
     param_gumbel = list(
-      copula = copulagraphicr::C_Gumbel,
+      copula = "Gumbel",
       tau = NA
     ),
     est_gumbel = list(),
     surv_gumbel = data.frame(),
     param_joe = list(
-      copula = copulagraphicr::C_Joe,
+      copula = "Joe",
       tau = NA
     ),
     est_joe = list(),
