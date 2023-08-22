@@ -41,36 +41,53 @@
 #' # est_Ind <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Independence)
 #' # est_Clayton <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Gumbel, tau = 0.5)
 #' # est_Frank <- copulagraphicr::CG_fit(k = k, p_1 = p_1, t_grid = t_grid, copula = copulagraphicr::C_Frank, tau = 0.5)
-CG_fit <- function(p_1,
-                   k,
-                   t_grid,
-                   copula,
-                   error_A = 1e-7,
-                   error_B = 1e-5,
-                   theta = NA,
-                   tau = NA) {
+CG_fit <- function(
+    p_1,
+    k,
+    t_grid,
+    copula,
+    error_A = 1e-7,
+    error_B = 1e-5,
+    theta = NA,
+    tau = NA
+  ) {
   F_hat <- c(0)
   G_hat <- c(0)
   mu_C_B <- c(0)
   mu_C_A <- c(0)
-  copula <- copula
-    for (i in 2:(length(t_grid))) {
-    solve <- copulagraphicr::solve_G_F(F_t_i_minus_1 = F_hat[i-1],
-                                       G_t_i_minus_1 = G_hat[i-1],
-                                       mu_C_B_t_i_minus_1 = mu_C_B[i-1],
-                                       copula = copula,
-                                       error_A,
-                                       error_B,
-                                       i = i,
-                                       p_1 = p_1,
-                                       k = k,
-                                       theta = theta,
-                                       tau = tau)
-    F_hat[i] <- solve[[1]]
-    G_hat[i] <- solve[[2]]
-    mu_C_B[i] <- solve[[3]]
-    mu_C_A[i] <- solve[[4]]
-    print(paste0("Currently evaluating ", i, "-th time point."))
-    }
+
+  if (splus2R::is.missing(copula)) {
+    copula <- copulagraphicr::C_Independence
+  } else if (copula == "Frank") {
+    copula <- copulagraphicr::C_Frank
+  } else if (copula == "Gumbel") {
+    copula <- copulagraphicr::C_Gumbel
+  } else if (copula == "Joe") {
+    copula <- copulagraphicr::C_Joe
+  } else if (copula == "Independence") {
+    copula <- copulagraphicr::C_Independence
+  }
+
+  for (i in 2:(length(t_grid))) {
+  solve <- copulagraphicr::solve_G_F(
+    F_t_i_minus_1 = F_hat[i-1],
+    G_t_i_minus_1 = G_hat[i-1],
+    mu_C_B_t_i_minus_1 = mu_C_B[i-1],
+    copula = copula,
+    error_A,
+    error_B,
+    i = i,
+    p_1 = p_1,
+    k = k,
+    theta = theta,
+    tau = tau
+  )
+  F_hat[i] <- solve[[1]]
+  G_hat[i] <- solve[[2]]
+  mu_C_B[i] <- solve[[3]]
+  mu_C_A[i] <- solve[[4]]
+
+  print(paste0("Currently evaluating ", i, "-th time point."))
+  }
   return(list(F_hat, G_hat))
 }

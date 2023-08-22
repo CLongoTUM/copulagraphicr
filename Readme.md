@@ -1,13 +1,17 @@
 
 # copulagraphicr
 
-The package allows the user to analyze a dataset consisting of
-observations of two competing risks. The package contains a function to
-load the competing risk data, a function to calculate characteristic
-quantities of the competing data and a function to calculate the
-corresponding Copula-Graphic estimator for a given Copula. Further the
-package contains predefined plots of the sample data and the
-Copula-Graphic estimator.
+This package implements the following research paper: MING ZHENG , JOHN
+P. KLEIN, Estimates of marginal survival for dependent competing risks
+based on an assumed copula, Biometrika, Volume 82, Issue 1, March 1995,
+Pages 127â€“138, <https://doi.org/10.1093/biomet/82.1.127> The package
+allows the user to analyze a dataset consisting of observations of two
+competing risks. The package contains a function to load the competing
+risk data, a function to calculate characteristic quantities of the
+competing data and a function to calculate the corresponding
+Copula-Graphic estimator for a given Copula. Further the package
+contains predefined plots of the sample data and the Copula-Graphic
+estimator.
 
 | Version    | Maintainer                                 |
 |:-----------|:-------------------------------------------|
@@ -43,9 +47,7 @@ copula_graphic <- new("copula_graphic")
 
 ``` r
 ## load package sample data (competing risk data, package data)
-copula_graphic@sample_data <- copulagraphicr::load_data(
-  data_path = NA
-)
+copula_graphic@sample_data <- copulagraphicr::load_data()
 
 ## visualize competing risk data
 copulagraphicr::visualize_data(
@@ -78,42 +80,25 @@ error_B <- 1e-3
 tau <- 0.5
 
 ## calculate Copula-Graphic estimator for different assumed copulas
-est_Frank <- copulagraphicr::CG_fit(
-  k = copula_graphic@empirical_quantities$k,
-  p_1 = copula_graphic@empirical_quantities$p_1,
-  t_grid = copula_graphic@empirical_quantities$t_grid,
-  copula = copulagraphicr::C_Frank,
-  error_A = error_A,
-  error_B = error_B,
-  tau = tau
-)
-est_Gumbel <- copulagraphicr::CG_fit(
-  k = copula_graphic@empirical_quantities$k,
-  p_1 = copula_graphic@empirical_quantities$p_1,
-  t_grid = copula_graphic@empirical_quantities$t_grid,
-  copula = copulagraphicr::C_Gumbel,
-  error_A = error_A,
-  error_B = error_B,
-  tau = tau
-)
-est_Joe <- copulagraphicr::CG_fit(
-  k = copula_graphic@empirical_quantities$k,
-  p_1 = copula_graphic@empirical_quantities$p_1,
-  t_grid = copula_graphic@empirical_quantities$t_grid,
-  copula = copulagraphicr::C_Joe,
-  error_A = error_A,
-  error_B = error_B,
-  tau = tau
-)
-est_Ind <- copulagraphicr::CG_fit(
-  k = copula_graphic@empirical_quantities$k,
-  p_1 = copula_graphic@empirical_quantities$p_1,
-  t_grid = copula_graphic@empirical_quantities$t_grid,
-  copula = copulagraphicr::C_Independence,
-  error_A = error_A,
-  error_B = error_B,
-  tau = tau
-)
+copula_available <- c("Frank", "Gumbel", "Joe", "Independence")
+est_fit <- lapply(copula_available, function(copula) {
+  return(
+    copulagraphicr::CG_fit(
+      k = copula_graphic@empirical_quantities$k,
+      p_1 = copula_graphic@empirical_quantities$p_1,
+      t_grid = copula_graphic@empirical_quantities$t_grid,
+      copula = copula,
+      error_A = error_A,
+      error_B = error_B,
+      tau = tau
+    )
+  )
+})
+
+est_Frank <- est_fit[[1]]
+est_Gumbel <- est_fit[[2]]
+est_Joe <- est_fit[[3]]
+est_Ind <- est_fit[[4]]
 
 ## extract Copula-Graphic estimate of survival function
 S_Frank <- 1 - est_Frank[[1]]
