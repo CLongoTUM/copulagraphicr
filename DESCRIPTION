@@ -4,6 +4,10 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Claudio", "Longo", , "ClaudioLongo2212@gmail.com", role = c("aut", "cre"))
 Description: 
+  This package implements the following research paper:
+  MING ZHENG , JOHN P. KLEIN, Estimates of marginal survival for dependent competing risks based on an assumed copula, 
+  Biometrika, Volume 82, Issue 1, March 1995, Pages 127–138, https://doi.org/10.1093/biomet/82.1.127
+  
   The package allows the user to analyze a dataset consisting of observations of two competing risks. 
   The package contains a function to load the competing risk data, a function to calculate 
   characteristic quantities of the competing data and a function to calculate the corresponding 
